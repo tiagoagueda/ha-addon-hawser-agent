@@ -1,22 +1,14 @@
 # Hawser Agent – Add-on Home Assistant OS
 
-## ⚠️ Disclaimer
+## ⚠️ Requirements
 
-> **Important notice**
+> **Protection Mode must be disabled**
 >
-> This Home Assistant add-on is **currently not functional on Home Assistant OS** due to **platform limitations**.
+> This addon requires access to the Docker socket (`/var/run/docker.sock`) via the HA Supervisor `docker_socket` map.
 >
-> Home Assistant OS **does not allow third-party add-ons to access the Docker API** (`/var/run/docker.sock`), even in read-only or privileged modes. As a result, Docker-based agents such as **Hawser** cannot retrieve container information from HA OS.
->
-> 🔧 **Status**: The add-on is under active investigation. Alternative approaches and workarounds are being evaluated, but there is **no guaranteed solution** at this time.
->
-> ✅ This is **not a bug in Hawser or Dockhand**, but a design restriction of Home Assistant OS.
-
-Still trying to find a proper solution for that !
+> After installing the addon, go to **Settings → Add-ons → Hawser Agent → Info** and **disable Protection Mode**. Without this step the addon will fail to start.
 
 ![Dockhand Logo](logo.png)
-
- 
 
 ## 📌 Présentation
 
@@ -29,9 +21,6 @@ Son rôle est simple :
 
 * exposer l’API Docker de Home Assistant à Dockhand
 * via une connexion **sortante sécurisée (Edge mode)**
-
----
-
 
 ---
 

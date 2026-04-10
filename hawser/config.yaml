@@ -10,14 +10,11 @@ arch:
 startup: services
 boot: auto
 
-
-# 🔴 FORMAT HA 2026 (LISTE OBLIGATOIRE)
 privileged:
   - SYS_ADMIN
 
-# ⚠️ map docker_socket ignoré en 2026 → on l’enlève
-# map:
-#   - docker_socket
+map:
+  - docker_socket
 
 host_network: false
 
