@@ -1,6 +1,6 @@
 name: Hawser Agent
 slug: hawser
-version: "1.1.8"
+version: "1.1.9"
 description: Hawser agent for Dockhand (Edge mode)
 
 arch:
@@ -12,6 +12,9 @@ boot: auto
 
 docker_api: true
 full_access: true
+
+ports:
+  2376/tcp: 2376
 
 host_network: false
 

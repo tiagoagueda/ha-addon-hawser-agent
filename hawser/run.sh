@@ -2,10 +2,20 @@
 
 bashio::require.unprotected
 
-bashio::log.info "Hawser HA add-on starting"
-bashio::log.info "Dockhand URL: $(bashio::config 'dockhand_server_url')"
+SERVER="$(bashio::config 'dockhand_server_url')"
+TOKEN="$(bashio::config 'token')"
 
-exec hawser \
-  --server "$(bashio::config 'dockhand_server_url')" \
-  --token "$(bashio::config 'token')" \
-  --log-level debug
+bashio::log.info "Hawser HA add-on starting"
+bashio::log.info "Dockhand URL: ${SERVER}"
+bashio::log.info "Token set: $([ -n "${TOKEN}" ] && echo yes || echo NO - EMPTY)"
+
+if bashio::var.is_empty "${SERVER}" || bashio::var.is_empty "${TOKEN}"; then
+  bashio::log.warning "Server URL or token is empty - starting in Standard mode on port 2376"
+  exec hawser --log-level debug
+else
+  bashio::log.info "Starting in Edge mode"
+  exec hawser \
+    --server "${SERVER}" \
+    --token "${TOKEN}" \
+    --log-level debug
+fi
