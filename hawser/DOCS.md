@@ -1,6 +1,6 @@
 # Hawser Agent – Home Assistant
 
-![Dockhand Logo](logo.png)
+![Dockhand Logo](https://raw.githubusercontent.com/tiagoagueda/ha-addon-hawser-agent/main/hawser/logo.png)
 
 Docker agent that connects Home Assistant to Dockhand.
 
