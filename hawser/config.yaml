@@ -1,8 +1,9 @@
 name: Hawser Agent
 slug: hawser
-version: "1.2.2"
+version: "1.2.3"
 stage: experimental
 description: Hawser agent for Dockhand (Edge mode)
+url: https://github.com/tiagoagueda/ha-addon-hawser-agent
 
 arch:
   - amd64
@@ -12,7 +13,7 @@ startup: services
 boot: auto
 
 docker_api: true
-full_access: true
+apparmor: true
 
 ports:
   2376/tcp: 2376

@@ -1,0 +1,59 @@
+#include <tunables/global>
+
+profile hawser_addon flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+
+  # Allow all capabilities needed for a standard process
+  capability setgid,
+  capability setuid,
+  capability net_bind_service,
+
+  # File access
+  file,
+
+  # Signals
+  signal,
+
+  # Outbound network (TCP to Dockhand server + Docker API over socket)
+  network tcp,
+  network udp,
+  network dgram,
+  network stream,
+  network inet,
+  network inet6,
+  network unix dgram,
+  network unix stream,
+
+  # Hawser binary (Alpine-based image)
+  /hawser ix,
+  /usr/local/bin/hawser ix,
+  /bin/** ix,
+  /usr/bin/** ix,
+  /sbin/** ix,
+  /usr/sbin/** ix,
+
+  # Shell and jq (used by run.sh)
+  /bin/sh ix,
+  /usr/bin/jq ix,
+
+  # Docker socket (core requirement)
+  /var/run/docker.sock rw,
+  /var/run/ r,
+
+  # HA addon options
+  /data/options.json r,
+
+  # Compose stacks temp dir
+  /tmp/** rw,
+
+  # Proc/sys reads needed by hawser for host metrics
+  @{PROC}/*/net/dev r,
+  @{PROC}/meminfo r,
+  @{PROC}/*/status r,
+  /sys/fs/cgroup/** r,
+
+  # Deny everything else
+  deny /proc/sysrq-trigger w,
+  deny /proc/*/mem rw,
+  deny @{PROC}/sys/kernel/modprobe w,
+}
