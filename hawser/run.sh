@@ -1,19 +1,20 @@
-#!/usr/bin/with-contenv bashio
+#!/bin/sh
+set -e
 
-bashio::require.unprotected
+OPTIONS="/data/options.json"
 
-SERVER="$(bashio::config 'dockhand_server_url')"
-TOKEN="$(bashio::config 'token')"
+SERVER=$(jq -r '.dockhand_server_url // ""' "${OPTIONS}")
+TOKEN=$(jq -r '.token // ""' "${OPTIONS}")
 
-bashio::log.info "Hawser HA add-on starting"
-bashio::log.info "Dockhand URL: ${SERVER}"
-bashio::log.info "Token set: $([ -n "${TOKEN}" ] && echo yes || echo NO - EMPTY)"
+echo "[INFO] Hawser HA add-on starting"
+echo "[INFO] Dockhand URL: ${SERVER}"
+echo "[INFO] Token set: $([ -n "${TOKEN}" ] && echo yes || echo 'NO - EMPTY')"
 
-if bashio::var.is_empty "${SERVER}" || bashio::var.is_empty "${TOKEN}"; then
-  bashio::log.warning "Server URL or token is empty - starting in Standard mode on port 2376"
+if [ -z "${SERVER}" ] || [ -z "${TOKEN}" ]; then
+  echo "[WARN] Server URL or token is empty - starting in Standard mode on port 2376"
   exec hawser --log-level debug
 else
-  bashio::log.info "Starting in Edge mode"
+  echo "[INFO] Starting in Edge mode"
   exec hawser \
     --server "${SERVER}" \
     --token "${TOKEN}" \
