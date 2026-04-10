@@ -1,6 +1,6 @@
 name: Hawser Agent
 slug: hawser
-version: "1.2.0"
+version: "1.2.1"
 description: Hawser agent for Dockhand (Edge mode)
 
 arch:
